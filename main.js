@@ -25,9 +25,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function ambilDaftarAbsensi() {
-  const refDokumen = collection(db, "absensi");
-  const kueri = query(refDokumen, orderBy("nama"));
+export async function ambilDaftarMapel() {
+  const refDokumen = collection(db, "Mapel");
+  const kueri = query(refDokumen, orderBy("hari"));
   const cuplikanKueri = await getDocs(kueri);
 
   let hasil = [];
@@ -38,8 +38,9 @@ export async function ambilDaftarAbsensi() {
       jamke: dok.data().jamke,
       kelas: dok.data().kelas,
       mapel: dok.data().mapel,
-      namaguru: dok.data().namaguru,
+      namagurumapel:dok.data().namagurumapel,
       waktu: dok.data().waktu,
+      mp: dok.data().mp,
 
     });
   });
@@ -47,46 +48,4 @@ export async function ambilDaftarAbsensi() {
 
 
   return hasil;
-}
-
-export function formatAngka(x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
-
-export async function tambahAbsensi(tanggal, nis, nama, alamat, noTlpn, kelas, keterangan) {
-  try {
-    const dokRef = await addDoc(collection(db, 'absensi'), {
-      hari: hari,
-      jamke: jamke,
-      kelas: kelas,
-      mapel: mapel,
-      namaguru: namaguru,
-      waktu: waktu,
-    });
-    console.log('berhasil menembah ' + dokRef.id);
-  } catch (e) {
-    console.log('gagal menambah ' + e);
-  }
-}
-
-export async function hapusAbsensi(docId) {
-  await deleteDoc(doc(db, "absensi", docId));
-}
-
-export async function ubahAbsensi(docId, tanggal, nis, nama, alamat, noTlpn, kelas, keterangan) {
-  await updateDoc(doc(db, "absensi", docId), {
-    hari: hari,
-      jamke: jamke,
-      kelas: kelas,
-      mapel: mapel,
-      namaguru: namaguru,
-      waktu: waktu,
-  });
-}
-
-export async function ambilAbsensi(docId) {
-  const docRef = await doc(db, "absensi", docId);
-  const docSnap = await getDoc(docRef);
-
-  return await docSnap.data();
 }

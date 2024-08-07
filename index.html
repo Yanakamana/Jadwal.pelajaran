@@ -72,23 +72,25 @@
   </style>
 
   <script type="module">
-    import { ambilDaftarAbsensi, formatAngka, hapusAbsensi } from './main.js';
+    import { ambilDaftarMapel, } from './main.js';
 
     $(document).ready(async function() {
       let elemenDaftar = $("#daftar-absensi > tbody");
-      let daftarAbsensi = await ambilDaftarAbsensi();
+      let daftarMapel = await ambilDaftarMapel();
       let nomor = 1;
 
 
 
-      daftarAbsensi.forEach((data) => {
+      daftarMapel.forEach((data) => {
         elemenDaftar.append(
           '<tr>' +
           '<th>' + nomor + '</th>' +
           '<td>' + data.hari + '</td>' +
-          '<td>' + data.jam ke + '</td>' +
+          '<td>' + data.jamke + '</td>' +
+          '<td>' + data.kelas + '</td>' +
           '<td>' + data.mapel + '</td>' +
-          '<td>' + data.namaguru + '</td>' + '<td>' + data.noTlpn + '</td>' + '<td>' + data.waktu + '</td>' + '<td>' + data. + '</td>' +
+          '<td>' + data.namagurumapel + '</td>' + 
+          '<td>' + data.waktu + '</td>' + 
           '<td class="stack-up">' +
           ' <a href="#" class="btn btn-warning link-ubah"  data="' +
           data.id +
@@ -107,7 +109,7 @@
       })
 
       $('.link-ubah').click(async function() {
-        window.location.replace('ubah-absensi.html?docId=' + $(this).attr('data'));
+        window.location.replace('ubah-absensi,.html?docId=' + $(this).attr('data'));
       })
 
       $('#loader').hide();
